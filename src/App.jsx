@@ -1,10 +1,14 @@
+import NoProjectspage from "./components/NoProjectsPage";
 import SideBar from "./components/SideBar";
 
 function App() {
+  let content = <NoProjectspage />;
+
   return (
-    <div>
+    <main className="h-screen flex">
       <SideBar />
-    </div>
+      <div className="flex-1 flex items-center justify-center">{content}</div>
+    </main>
   );
 }
 
