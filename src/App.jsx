@@ -20,17 +20,34 @@ function App() {
     });
   }
 
+  function saveNewProject(projectData) {
+    setProjectsState((prevState) => {
+      const newProject = {
+        ...projectData,
+        id: Math.random(),
+      };
+
+      return {
+        ...prevState,
+        projects: [...prevState.projects, newProject],
+        action: "nothing-selected",
+      };
+    });
+  }
+
   let content;
 
   if (projectsState.action === "added") {
-    content = <NewProjectsPage onAddNewProject={addNewProject} />;
+    content = (
+      <NewProjectsPage onAdd={saveNewProject} onAddNewProject={addNewProject} />
+    );
   } else if (projectsState.action === "nothing-selected") {
     content = <NoProjectsPage onAddNewProject={addNewProject} />;
   }
 
   return (
     <main className="h-screen flex">
-      <SideBar />
+      <SideBar projects={projectsState.projects} />
       {content}
     </main>
   );
