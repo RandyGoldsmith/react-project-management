@@ -3,7 +3,7 @@ import Input from "./Input";
 import Modal from "./Modal";
 import { useRef, useState } from "react";
 
-export default function NewProjectsPage({ onAdd }) {
+export default function NewProjectsPage({ onAdd, onCancel }) {
   const title = useRef();
   const description = useRef();
   const date = useRef();
@@ -64,7 +64,10 @@ export default function NewProjectsPage({ onAdd }) {
             </button>
           </li>
           <li>
-            <button className="w-20 p-1 rounded-md border bg-red-600 border-red-600 hover:bg-red-700 hover:border-red-700">
+            <button
+              className="w-20 p-1 rounded-md border bg-red-600 border-red-600 hover:bg-red-700 hover:border-red-700"
+              onClick={onCancel}
+            >
               Cancel
             </button>
           </li>

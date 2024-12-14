@@ -20,7 +20,7 @@ function App() {
     });
   }
 
-  function handleSave(projectData) {
+  function handleSaveProject(projectData) {
     setProjectsState((prevState) => {
       const newProject = {
         ...projectData,
@@ -35,11 +35,24 @@ function App() {
     });
   }
 
+  function handleCancelProject() {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        action: "nothing-selected",
+      };
+    });
+  }
+
   let content;
 
   if (projectsState.action === "added") {
     content = (
-      <NewProjectsPage onAdd={handleSave} onAddNewProject={addNewProject} />
+      <NewProjectsPage
+        onAdd={handleSaveProject}
+        onAddNewProject={addNewProject}
+        onCancel={handleCancelProject}
+      />
     );
   } else if (projectsState.action === "nothing-selected") {
     content = <NoProjectsPage onAddNewProject={addNewProject} />;
