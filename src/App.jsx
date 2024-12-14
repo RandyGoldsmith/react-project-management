@@ -20,7 +20,7 @@ function App() {
     });
   }
 
-  function saveNewProject(projectData) {
+  function handleSave(projectData) {
     setProjectsState((prevState) => {
       const newProject = {
         ...projectData,
@@ -39,7 +39,7 @@ function App() {
 
   if (projectsState.action === "added") {
     content = (
-      <NewProjectsPage onAdd={saveNewProject} onAddNewProject={addNewProject} />
+      <NewProjectsPage onAdd={handleSave} onAddNewProject={addNewProject} />
     );
   } else if (projectsState.action === "nothing-selected") {
     content = <NoProjectsPage onAddNewProject={addNewProject} />;
