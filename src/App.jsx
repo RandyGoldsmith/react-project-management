@@ -1,5 +1,6 @@
 import NewProjectsPage from "./components/NewProjectsPage";
 import NoProjectsPage from "./components/NoProjectsPage";
+import ProjectDetails from "./components/ProjectDetails";
 import SideBar from "./components/SideBar";
 import { useState } from "react";
 
@@ -10,6 +11,12 @@ function App() {
     action: "nothing-selected",
     projects: [],
   });
+
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
+
+  function handleSelectProject(projectId) {
+    setSelectedProjectId(projectId);
+  }
 
   function addNewProject() {
     setProjectsState((prevState) => {
@@ -46,7 +53,22 @@ function App() {
 
   let content;
 
-  if (projectsState.action === "added") {
+  if (selectedProjectId) {
+    const selectedProject = projectsState.projects.find(
+      (project) => project.id === selectedProjectId
+    );
+
+    if (selectedProject) {
+      content = (
+        <ProjectDetails
+          project={selectedProject}
+          onBack={() => setSelectedProjectId(null)}
+        />
+      );
+    } else {
+      content = <p>Project not found</p>;
+    }
+  } else if (projectsState.action === "added") {
     content = (
       <NewProjectsPage
         onAdd={handleSaveProject}
@@ -54,13 +76,16 @@ function App() {
         onCancel={handleCancelProject}
       />
     );
-  } else if (projectsState.action === "nothing-selected") {
+  } else {
     content = <NoProjectsPage onAddNewProject={addNewProject} />;
   }
 
   return (
     <main className="h-screen flex">
-      <SideBar projects={projectsState.projects} />
+      <SideBar
+        projects={projectsState.projects}
+        onSelectProject={handleSelectProject}
+      />
       {content}
     </main>
   );
